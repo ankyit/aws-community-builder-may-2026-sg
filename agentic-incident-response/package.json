@@ -1,0 +1,31 @@
+{
+  "name": "agentic-incident-response",
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "wait": "tsx src/opensearch/wait.ts",
+    "setup-index": "tsx src/opensearch/setup-index.ts",
+    "seed": "tsx src/opensearch/seed-incidents.ts",
+    "create-alarms": "tsx src/cloudwatch/create-alarms.ts",
+    "simulate": "tsx src/cloudwatch/simulate-alarm.ts",
+    "test-local": "tsx src/test-local.ts",
+    "test-cw": "tsx src/test-cloudwatch.ts",
+    "demo": "tsx src/run-demo.ts",
+    "watch": "tsx src/watch-demo.ts"
+  },
+  "dependencies": {
+    "@strands-agents/sdk": "latest",
+    "@opensearch-project/opensearch": "latest",
+    "@aws-sdk/client-cloudwatch": "latest",
+    "zod": "latest",
+    "dotenv": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}

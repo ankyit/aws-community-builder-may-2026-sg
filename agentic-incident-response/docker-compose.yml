@@ -1,0 +1,34 @@
+services:
+  opensearch:
+    image: opensearchproject/opensearch:3.5.0
+    container_name: opensearch-demo
+    environment:
+      - discovery.type=single-node
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Demo@Strong1Pass
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sk https://localhost:9200 -u admin:Demo@Strong1Pass | grep -q 'opensearch'"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  dashboards:
+    image: opensearchproject/opensearch-dashboards:3.5.0
+    container_name: opensearch-dashboards-demo
+    environment:
+      - OPENSEARCH_HOSTS=["https://opensearch:9200"]
+      - opensearch.username=admin
+      - opensearch.password=Demo@Strong1Pass
+      - opensearch.ssl.verificationMode=none
+    ports:
+      - "5601:5601"
+    depends_on:
+      opensearch:
+        condition: service_healthy
+
+volumes:
+  opensearch-data:
